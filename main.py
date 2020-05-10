@@ -1,93 +1,154 @@
 """
 @author:Administrator
 @file:main.py
-@time:2020/05/07
+@time:2020/05/09
 """
 
-import requests
-import re
-from bs4 import BeautifulSoup
+import sys
+from PyQt5.QtWidgets import QApplication, QWidget, QMessageBox, QFileDialog
+from PyQt5.QtGui import QIcon
 import json
-import time
-import random
-import os
 
-from urllib.request import urlretrieve
+from Win_Ui import Ui_Form  # main界面
+from Spider import SpiderPdd    # 爬虫
+import load_excel   # 文本处理
 
 
-class SpiderPdd(object):
-    def __init__(self, url_start):
-        self.headers = {
-            'User-Agent': 'Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Ch'
-                          'rome/81.0.4044.122 Safari/537.36'}
-        self.url = url_start
-        self.num = 0
-        self.path = r'C:\Users\Zero\Documents\leidian\Pictures'
+class Main(QWidget):
+    def __init__(self, parent=None):
+        super().__init__(parent)
+        self.ui = Ui_Form()
+        self.ui.setupUi(self)
+        self.show_UI()
+        # self.wu = WindowUi()
+        self.sp = SpiderPdd()
+        self.dia_log = QFileDialog()
+        self.excel = load_excel
 
-    def get_url(self):
-        res = requests.get(self.url, headers=self.headers)
-        res = res.content.decode('utf-8')
-        with open('ceshi3.html', 'w', encoding='utf-8') as f:
-            f.write(res)
-        return res
+    def show_UI(self):
+        """ 附加UI """
+        self.setWindowTitle("拼多多爬虫")
+        self.setWindowIcon(QIcon("images/pdd.jpg"))
+        self.resize(964, 635)   # 设置尺寸表
+        self.setFixedSize(964, 635)     # 设置固定尺寸
 
-    def open_html(self):
-        with open('ceshi.html', 'r', encoding='utf-8') as f:
-             html_data = f.read()
-        return html_data
+    def get_line_url(self):
+        """1. 获取用户输入的url"""
+        url = self.ui.url_ipt.text()
+        url = url.strip()   # 清除空格
+        return url
 
-    def get_data(self, data):
-        soup = BeautifulSoup(data, 'html.parser')
+    def get_save_image_path(self):
+        """2. 获取用户输入的保存文件路径"""
+        save_image_path = self.ui.line_url_save.text()
+        save_image_path = r'{}'.format(save_image_path.strip())   # 去除空格并转义
+        return save_image_path
+
+    def get_ipt_cookie(self):
+        """2-1. 获取用户输入的cookies,没有则不返回"""
+        cookie = self.ui.lineEdit.text()
+        return cookie
+
+    def info_image_url(self):
+        """3. url 输入有误提示"""
+        QMessageBox.information(self, '提示', '图片地址有误已，请重新输入', QMessageBox.Ok)
+
+    def get_excel_path(self):
+        """3-2. 用户未输入url,主动抛出导入文件"""
+        global name
         try:
-            soup1 = soup.find_all('script')[4]
-        except Exception as e:
-            try:
-                soup1 = soup.find_all('script')[3]
-            except Exception as e:
-                soup1 = soup.find_all('script')[5]
-
-        soup2 = soup1.get_text()
-        pattern = r'window.rawData=\s{(.*?)};\n'
-        result = re.findall(pattern, soup2)[0]
-        result_data = '{'+result+'}'
-        return result_data
-
-    def get_result(self, result):
-        result = json.loads(result)
-        end_data = result['store']['initDataObj']['goods']['viewImageData']
-        images_item = []
-        for i in end_data:
-            images_item.append(i)
-
-        images = result['store']['initDataObj']['goods']['detailGallery']
-        for image in images:
-            images_item.append(image['url'])
-        name = result['store']['initDataObj']['goods']['goodsName']   # 名称
-        # 创建文件夹
-        try:
-            os.mkdir(self.path+'./{}'.format(name))
-        except FileExistsError as e:
+            filenames = self.dia_log.getOpenFileName(self, 'open file', '../', 'xlsx(*.xlsx)')
+            name = filenames[0]
+            name = r'{}'.format(name)
+            print('1xxxx')
+            return self.get_excel_url(name)
+        except FileNotFoundError as e:
+            print('2xxxx')
             pass
 
-        # context = result['store']['initDataObj']['goods']['goodsID']    # 宝贝id
-        return images_item, name
+    def get_excel_url(self, name):
+        """3-2-1. 获取单独的url"""
+        print('3xxx')
+        item_urls = self.excel.OpenExcel(book_name=name).run()
+        return item_urls
 
-    def down_image(self, urls, name):
-        """图片下载"""
-        for url in urls:
-            self.num += 1
-            time.sleep(random.randint(0, 1))
-            urlretrieve(url, self.path+'/{}/'.format(name)+name+'{}.jpg'.format(self.num))
+    def start_spider(self, url, save_image_path, cookie):
+        """4. 开始爬虫获取图片"""
+        status = self.sp.run(url=url, path_image=save_image_path, cookie=cookie)
+        return status
+
+    def save_excel(self, url_status):
+        """5. 保存爬取成功的"""
+        for i in url_status:
+            if i['status'] == 1:
+                self.excel.OpenExcel(book_name=name).modify_excel(i['rown'])
+            else:
+                pass
+        print('完成')
 
     def run(self):
-        html_data = self.get_url()
-        # html_date = self.open_html()
-        data = self.get_data(html_data)
-        images_item, name = self.get_result(data)
-        self.down_image(images_item, name)
+        # 1. 获取用户输入的url
+        url = self.get_line_url()
+        # 2. 获取用户保存的路径
+        save_image_path = self.get_save_image_path()
+        # 2-1. 获取用户输入的cookie
+        cookie = self.get_ipt_cookie()
+        print(cookie)
+        # 3. 如果用户url输入有误，提醒用户重新输入
+        if url == '':
+            try:
+                QMessageBox.information(self, '提示', '未添加单个url,将选择导入excel', QMessageBox.Ok)
+                print('url为写入，请导入excel')
+                # 3-2, 用户未输入url,主动抛出导入excel表格
+                url_status = []
+                item_urls = self.get_excel_path()
+                for i in item_urls:
+                    url_item = {'编号': '', '名称': '', 'url': '', 'type': '', 'rown': '', 'status': ''}
+                    url = i['url']
+                    status = self.start_spider(url=url, save_image_path=save_image_path, cookie=cookie)
+                    url_item['编号'] = i['编号']
+                    url_item['名称'] = i['名称']
+                    url_item['url'] = i['url']
+                    url_item['type'] = i['type']
+                    url_item['rown'] = i['rown']
+                    url_item['status'] = status
+                    url_status.append(url_item)
+                    print(url_item)
+
+                with open('result.json', 'w', encoding='utf-8') as f:
+                    for i in url_status:
+                        f.write(json.dumps(i))
+
+                self.save_excel(url_status)
+                status = 1
+            except Exception as e:
+                print(e)
+                print('错误')
+                pass
+                status = 2
+
+        elif url[:4] == 'http':
+            # 3-1. 用户输入正确的url,爬虫开始
+            print('已输入')
+            # 4. 爬虫开始
+            status = self.start_spider(url=url, save_image_path=save_image_path, cookie=cookie)
+        else:
+            # 3-3. 输入错误，需重新输入
+            self.info_image_url()
+            print('输入有误，请重新输入')
+            status = 0
+
+        if status == 1:
+            # 当前图片下载完成
+            QMessageBox.information(self, '提示', '图片已成功下载', QMessageBox.Ok)
+        elif status == 2:
+            QMessageBox.information(self, '提示', '图片下载失败，请稍后重试', QMessageBox.Ok)
+        else:
+            self.ui.url_ipt.clear()
 
 
 if __name__ == '__main__':
-    url = 'http://yangkeduo.com/goods.html?goods_id=801187988&refer_page_name=search_opt&refer_page_id=23699_1588920057214_hej6dsulv3&refer_page_sn=23699&_x_link_id=8a79d0ee-358d-4509-a7c5-b8d360d7f8a0&_x_goods_id=801187988'
-    sp = SpiderPdd(url)
-    sp.run()
+    app = QApplication(sys.argv)
+    ma = Main()
+    ma.show()
+    sys.exit(app.exec_())
