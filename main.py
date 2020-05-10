@@ -5,11 +5,14 @@
 """
 
 import sys
+
+from PyQt5.QtCore import QFileInfo
 from PyQt5.QtWidgets import QApplication, QWidget, QMessageBox, QFileDialog
 from PyQt5.QtGui import QIcon
 from Win_Ui import Ui_Form  # main界面
 from Spider import SpiderPdd    # 爬虫
 import load_excel   # 文本处理
+import ctypes
 
 
 class Main(QWidget):
@@ -22,10 +25,12 @@ class Main(QWidget):
         self.dia_log = QFileDialog()
         self.excel = load_excel
 
+
     def show_UI(self):
         """ 附加UI """
+        root = QFileInfo(__file__).absolutePath()
         self.setWindowTitle("拼多多爬虫")
-        self.setWindowIcon(QIcon('./images/pdd.png'))
+        self.setWindowIcon(QIcon(root+'./pdd.ico'))
         self.resize(964, 635)   # 设置尺寸表
         self.setFixedSize(964, 635)     # 设置固定尺寸
 
@@ -40,6 +45,7 @@ class Main(QWidget):
         save_image_path = self.ui.line_url_save.text()
         save_image_path = r'{}'.format(save_image_path.strip())   # 去除空格并转义
         if save_image_path == '':
+            QMessageBox.information(self, '提示', '未选择保存路径', QMessageBox.Ok)
             raise FileNotFoundError('错误556')
         return save_image_path
 
@@ -120,20 +126,17 @@ class Main(QWidget):
                         status = 1
                     except Exception as e:
                         print(e)
-                        print('错误')
                         pass
                         status = 2
 
                 elif url[:4] == 'http':
                     # 3-1. 用户输入正确的url,爬虫开始
-                    print('已输入')
                     # 4. 爬虫开始
                     self.ui.progressBar.setValue(50)
                     status = self.start_spider(url=url, save_image_path=save_image_path, cookie=cookie)
                 else:
                     # 3-3. 输入错误，需重新输入
                     self.info_image_url()
-                    print('输入有误，请重新输入')
                     status = 0
 
                 if status == 1:
@@ -145,11 +148,11 @@ class Main(QWidget):
                 else:
                     self.ui.url_ipt.clear()
         except FileNotFoundError as e:
-            print(e)
             pass
 
 
 if __name__ == '__main__':
+    ctypes.windll.shell32.SetCurrentProcessExplicitAppUserModelID("main")
     app = QApplication(sys.argv)
     ma = Main()
     ma.show()

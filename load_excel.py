@@ -67,7 +67,3 @@ class OpenExcel(object):
         return item_url
 
 
-if __name__ == '__main__':
-    book_name = r'G:/job/python/Spider_Pdd/stores.xlsx'
-    oe = OpenExcel(book_name)
-    oe.run()
