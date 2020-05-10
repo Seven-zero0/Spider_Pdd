@@ -2,14 +2,11 @@
 <project version="4">
   <component name="ChangeListManager">
     <list default="true" id="de599e76-98d4-40dc-afff-797f30d35a83" name="Default Changelist" comment="">
-      <change afterPath="$PROJECT_DIR$/images/pdd.jpg" afterDir="false" />
       <change beforePath="$PROJECT_DIR$/.idea/workspace.xml" beforeDir="false" afterPath="$PROJECT_DIR$/.idea/workspace.xml" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/README.md" beforeDir="false" afterPath="$PROJECT_DIR$/README.md" afterDir="false" />
-      <change beforePath="$PROJECT_DIR$/ceshi.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ceshi2.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/ceshi3.html" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" />
-      <change beforePath="$PROJECT_DIR$/window2.ui" beforeDir="false" afterPath="$PROJECT_DIR$/window2.ui" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/Spider.py" beforeDir="false" afterPath="$PROJECT_DIR$/Spider.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/images/pdd.jpg" beforeDir="false" />
+      <change beforePath="$PROJECT_DIR$/load_excel.py" beforeDir="false" afterPath="$PROJECT_DIR$/load_excel.py" afterDir="false" />
+      <change beforePath="$PROJECT_DIR$/main.py" beforeDir="false" afterPath="$PROJECT_DIR$/main.py" afterDir="false" />
     </list>
     <option name="SHOW_DIALOG" value="false" />
     <option name="HIGHLIGHT_CONFLICTS" value="true" />
@@ -19,8 +16,8 @@
   <component name="FileTemplateManagerImpl">
     <option name="RECENT_TEMPLATES">
       <list>
-        <option value="Python Script" />
         <option value="JavaScript File" />
+        <option value="Python Script" />
       </list>
     </option>
   </component>
@@ -36,12 +33,12 @@
   <component name="PropertiesComponent">
     <property name="RunOnceActivity.ShowReadmeOnStart" value="true" />
     <property name="WebServerToolWindowFactoryState" value="false" />
-    <property name="last_opened_file_path" value="$PROJECT_DIR$" />
+    <property name="last_opened_file_path" value="$PROJECT_DIR$/images" />
   </component>
   <component name="RecentsManager">
     <key name="CopyFile.RECENT_KEYS">
-      <recent name="G:\job\python\Spider_Pdd" />
       <recent name="G:\job\python\Spider_Pdd\images" />
+      <recent name="G:\job\python\Spider_Pdd" />
     </key>
   </component>
   <component name="RunManager" selected="Python.main">
@@ -89,7 +86,7 @@
       <option name="INPUT_FILE" value="" />
       <method v="2" />
     </configuration>
-    <configuration name="getqrcode" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
+    <configuration name="cshipyqt" type="PythonConfigurationType" factoryName="Python" temporary="true" nameIsGenerated="true">
       <module name="Spider_Pdd" />
       <option name="INTERPRETER_OPTIONS" value="" />
       <option name="PARENT_ENVS" value="true" />
@@ -97,12 +94,12 @@
         <env name="PYTHONUNBUFFERED" value="1" />
       </envs>
       <option name="SDK_HOME" value="" />
-      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$/file/pddanticontent" />
+      <option name="WORKING_DIRECTORY" value="$PROJECT_DIR$" />
       <option name="IS_MODULE_SDK" value="true" />
       <option name="ADD_CONTENT_ROOTS" value="true" />
       <option name="ADD_SOURCE_ROOTS" value="true" />
       <EXTENSION ID="PythonCoverageRunConfigurationExtension" runner="coverage.py" />
-      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/file/pddanticontent/getqrcode.py" />
+      <option name="SCRIPT_NAME" value="$PROJECT_DIR$/cshipyqt.py" />
       <option name="PARAMETERS" value="" />
       <option name="SHOW_COMMAND_LINE" value="false" />
       <option name="EMULATE_TERMINAL" value="false" />
@@ -158,10 +155,10 @@
     <recent_temporary>
       <list>
         <item itemvalue="Python.main" />
+        <item itemvalue="Python.cshipyqt" />
         <item itemvalue="Python.load_excel" />
         <item itemvalue="Python.Spider" />
         <item itemvalue="Python.ceshi" />
-        <item itemvalue="Python.getqrcode" />
       </list>
     </recent_temporary>
   </component>
@@ -185,6 +182,7 @@
       <workItem from="1589018958868" duration="19239000" />
       <workItem from="1589081760643" duration="17335000" />
       <workItem from="1589106075836" duration="6000" />
+      <workItem from="1589106486621" duration="4051000" />
     </task>
     <servers />
   </component>
@@ -200,26 +198,26 @@
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state x="805" y="311" key="FileChooserDialogImpl/0.0.2048.1112@0.0.2048.1112" timestamp="1589029406944" />
-    <state width="2005" height="271" key="GridCell.Tab.0.bottom" timestamp="1589105751993">
+    <state width="2005" height="271" key="GridCell.Tab.0.bottom" timestamp="1589110539498">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state width="1877" height="210" key="GridCell.Tab.0.bottom/0.0.1920.1040@0.0.1920.1040" timestamp="1588927549337" />
-    <state width="2005" height="271" key="GridCell.Tab.0.bottom/0.0.2048.1112@0.0.2048.1112" timestamp="1589105751993" />
-    <state width="2005" height="271" key="GridCell.Tab.0.center" timestamp="1589105751993">
+    <state width="2005" height="271" key="GridCell.Tab.0.bottom/0.0.2048.1112@0.0.2048.1112" timestamp="1589110539498" />
+    <state width="2005" height="271" key="GridCell.Tab.0.center" timestamp="1589110539497">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state width="1877" height="210" key="GridCell.Tab.0.center/0.0.1920.1040@0.0.1920.1040" timestamp="1588927549337" />
-    <state width="2005" height="271" key="GridCell.Tab.0.center/0.0.2048.1112@0.0.2048.1112" timestamp="1589105751993" />
-    <state width="2005" height="271" key="GridCell.Tab.0.left" timestamp="1589105751993">
+    <state width="2005" height="271" key="GridCell.Tab.0.center/0.0.2048.1112@0.0.2048.1112" timestamp="1589110539497" />
+    <state width="2005" height="271" key="GridCell.Tab.0.left" timestamp="1589110539497">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state width="1877" height="210" key="GridCell.Tab.0.left/0.0.1920.1040@0.0.1920.1040" timestamp="1588927549337" />
-    <state width="2005" height="271" key="GridCell.Tab.0.left/0.0.2048.1112@0.0.2048.1112" timestamp="1589105751993" />
-    <state width="2005" height="271" key="GridCell.Tab.0.right" timestamp="1589105751993">
+    <state width="2005" height="271" key="GridCell.Tab.0.left/0.0.2048.1112@0.0.2048.1112" timestamp="1589110539497" />
+    <state width="2005" height="271" key="GridCell.Tab.0.right" timestamp="1589110539498">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
     <state width="1877" height="210" key="GridCell.Tab.0.right/0.0.1920.1040@0.0.1920.1040" timestamp="1588927549337" />
-    <state width="2005" height="271" key="GridCell.Tab.0.right/0.0.2048.1112@0.0.2048.1112" timestamp="1589105751993" />
+    <state width="2005" height="271" key="GridCell.Tab.0.right/0.0.2048.1112@0.0.2048.1112" timestamp="1589110539498" />
     <state width="2005" height="376" key="GridCell.Tab.1.bottom" timestamp="1589040875436">
       <screen x="0" y="0" width="2048" height="1112" />
     </state>
@@ -244,8 +242,9 @@
   <component name="com.intellij.coverage.CoverageDataManagerImpl">
     <SUITE FILE_PATH="coverage/Spider_Pdd$ceshi.coverage" NAME="ceshi Coverage Results" MODIFIED="1589099616759" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Spider_Pdd$getqrcode.coverage" NAME="getqrcode Coverage Results" MODIFIED="1589091591406" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$/file/pddanticontent" />
+    <SUITE FILE_PATH="coverage/Spider_Pdd$cshipyqt.coverage" NAME="cshipyqt Coverage Results" MODIFIED="1589110052705" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Spider_Pdd$Spider.coverage" NAME="Spider Coverage Results" MODIFIED="1589102426867" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
-    <SUITE FILE_PATH="coverage/Spider_Pdd$main.coverage" NAME="main Coverage Results" MODIFIED="1589105518485" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
+    <SUITE FILE_PATH="coverage/Spider_Pdd$main.coverage" NAME="main Coverage Results" MODIFIED="1589110496320" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
     <SUITE FILE_PATH="coverage/Spider_Pdd$load_excel.coverage" NAME="load_excel Coverage Results" MODIFIED="1589105283650" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="coverage.py" COVERAGE_BY_TEST_ENABLED="true" COVERAGE_TRACING_ENABLED="false" WORKING_DIRECTORY="$PROJECT_DIR$" />
   </component>
 </project>

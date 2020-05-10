@@ -7,13 +7,13 @@
 
 import requests
 import re
+
 from bs4 import BeautifulSoup
 import json
 import time
 import random
 import os
 from urllib.request import urlretrieve
-from selenium import webdriver
 
 
 class SpiderPdd(object):
@@ -28,23 +28,23 @@ class SpiderPdd(object):
             'Accept-Encoding': 'gzip, deflate',
             'Host': 'yangkeduo.com',
         }
-        self.proxies = self.random_ip
+        # self.proxies = self.random_ip
         self.num = 0
 
-    @property
-    def random_ip(self):
-        with open('ip.json', 'r', encoding='utf-8') as f:
-            data = f.read()
-
-        data = json.loads(data)
-        ip_lists = data['data']
-        ip_list = []
-        for i in ip_lists:
-            array = {'http': ''}
-            array['http'] = 'http://{}:{}'.format(i['ip'], i['port'])
-            ip_list.append(array)
-
-        return random.choice(ip_list)
+    # @property
+    # def random_ip(self):
+    #     with open('ip.json', 'r', encoding='utf-8') as f:
+    #         data = f.read()
+    #
+    #     data = json.loads(data)
+    #     ip_lists = data['data']
+    #     ip_list = []
+    #     for i in ip_lists:
+    #         array = {'http': ''}
+    #         array['http'] = 'http://{}:{}'.format(i['ip'], i['port'])
+    #         ip_list.append(array)
+    #
+    #     return random.choice(ip_list)
 
     @property
     def user_agents(self):
@@ -53,21 +53,15 @@ class SpiderPdd(object):
         return user_agents
 
     def get_url(self, url, cookie):
-        print('spider: requests方式')
-        print(self.headers)
-        print(self.proxies)
         cookies = {
             'cookie': '{}'.format(cookie)
         }
         res = requests.get(url, headers=self.headers, cookies=cookies)
-        print('spider: 访问url1-2')
-        print(cookies)
         time.sleep(3)
         res = res.content.decode('utf-8')
         time.sleep(3)
-        print('spider: 访问url2')
-        with open('ceshi4.html', 'w', encoding='utf-8') as f:
-            f.write(res)
+        # with open('ceshi4.html', 'w', encoding='utf-8') as f:
+        #     f.write(res)
         return res
 
     def open_html(self):
@@ -76,35 +70,26 @@ class SpiderPdd(object):
         return html_data
 
     def get_data(self, data):
-        print('spider:获取数据1')
         soup = BeautifulSoup(data, 'html.parser')
         try:
-            print('spider:获取数据2')
             soup1 = soup.find_all('script')[5]
         except Exception as e:
-            print(e)
+            pass
 
         soup2 = soup1.get_text()
-        print(soup2)
         pattern = r'window.rawData=\s{(.*?)};\n'
         result = re.findall(pattern, soup2)[0]
         result_data = '{' + result + '}'
-        print('spider:获取数据4')
         return result_data
 
     def get_result(self, result, path_image):
-        print('spider: 创建文件夹1')
         result = json.loads(result)
-        print('spider: 创建文件夹2')
         end_data = result['store']['initDataObj']['goods']['viewImageData']
-        print('spider: 创建文件夹3')
         images_item = []
-        print('spider: 创建文件夹4')
         for i in end_data:
             images_item.append(i)
 
         images = result['store']['initDataObj']['goods']['detailGallery']
-        print('spider: 创建文件夹5')
         for image in images:
             images_item.append(image['url'])
         name = result['store']['initDataObj']['goods']['goodsName']  # 名称
@@ -114,13 +99,10 @@ class SpiderPdd(object):
         name = re.sub(char_list, '', name)
         # 创建文件夹
         try:
-            print('spider: 创建文件夹4')
             os.mkdir(path_image + './{}'.format(name))
         except FileExistsError as e:
             pass
         except Exception as e:
-            print('spider: 创建文件夹5')
-            print(e)
             os.mkdir(path_image + '/{}'.format(name))
 
         # context = result['store']['initDataObj']['goods']['goodsID']    # 宝贝id
@@ -128,10 +110,8 @@ class SpiderPdd(object):
 
     def down_image(self, urls, name, path_image):
         """图片下载"""
-        print('spider: 下载图片')
         for url in urls:
             self.num += 1
-            print('spider:下载图片1~xxx')
             time.sleep(random.randint(0, 1))
             urlretrieve(url, path_image + '/{}/'.format(name) + name + '{}.jpg'.format(self.num))
 
