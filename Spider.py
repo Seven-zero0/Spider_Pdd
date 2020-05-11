@@ -568,22 +568,29 @@ class SpiderPdd(object):
         time.sleep(3)
         res = res.content.decode('utf-8')
         time.sleep(3)
+        print('spider: get_url: 访问成功')
         return res
 
     def get_data(self, data):
+        print('spider: get_data: 开始获取数据')
         soup = BeautifulSoup(data, 'html.parser')
         try:
+            print('spider: get_data: 正在获取数据')
             soup1 = soup.find_all('script')[5]
-        except Exception as e:
-            pass
 
-        soup2 = soup1.get_text()
-        pattern = r'window.rawData=\s{(.*?)};\n'
-        result = re.findall(pattern, soup2)[0]
-        result_data = '{' + result + '}'
-        return result_data
+            soup2 = soup1.get_text()
+            pattern = r'window.rawData=\s{(.*?)};\n'
+            result = re.findall(pattern, soup2)[0]
+            result_data = '{' + result + '}'
+            print('spider: get_data: 获取数据成功')
+            return result_data
+        except Exception as e:
+            print(e)
+            print('spider: get_data: 错误 获取数据失败')
+            return 0
 
     def get_result(self, result, path_image):
+        print('spider: get_result: 开始 清洗数据，创建文件夹')
         result = json.loads(result)
         end_data = result['store']['initDataObj']['goods']['viewImageData']
         images_item = []
@@ -601,34 +608,55 @@ class SpiderPdd(object):
         # 创建文件夹
         try:
             os.mkdir(path_image + './{}'.format(name))
+            print('spider: get_result: 成功 清洗数据，创建文件夹')
         except FileExistsError as e:
+            print('spider: get_result: 文件夹已存在')
             pass
         except Exception as e:
             os.mkdir(path_image + '/{}'.format(name))
+            print('spider: get_result:  错误 其它意外错误')
 
         # context = result['store']['initDataObj']['goods']['goodsID']    # 宝贝id
+        print('spider: get_result: 返回结果 成功')
         return images_item, name
 
     def down_image(self, urls, name, path_image):
         """图片下载"""
-        for url in urls:
-            self.num += 1
-            time.sleep(random.randint(0, 1))
-            urlretrieve(url, path_image + '/{}/'.format(name) + name + '{}.jpg'.format(self.num))
-
-        return 1
+        print('spider: down_image: 开始 移动到文件夹')
+        try:
+            for url in urls:
+                self.num += 1
+                time.sleep(random.randint(0, 1))
+                urlretrieve(url, path_image + '/{}/'.format(name) + name + '{}.jpg'.format(self.num))
+            print('spider: down_image: 移动到文件夹 成功')
+            return 1
+        except Exception as e:
+            print('spider: down_image: 错误 移动到文件夹 失败')
+            return 2
 
     def run(self, url, path_image, cookie):
         # 访问url
         try:
             """ 完全运行OK，抛出1，否则 0"""
+            print('spider: 爬虫开始')
             html_data = self.get_url(url, cookie)
             # u获取数据
+            print('spider: 获取数据')
             data = self.get_data(html_data)
+            if data == 0:
+                raise FileExistsError('未获得数据')
             # 获取数据，创建文件夹
+            print('spider: 成功获取数据，开始创建文件夹')
             images_item, name = self.get_result(data, path_image)
             # 保存
+            print('spider: 开始移动文件到目录')
             result = self.down_image(images_item, name, path_image)
+            print('spider: 爬虫结束，  成功')
             return result
         except Exception as e:
+            print('spider: 爬虫结束，  失败')
+            print(e)
             return 2
+        except FileExistsError as e:
+            print('spider: 错误，获取数据失败')
+            print(e)
