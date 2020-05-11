@@ -30,7 +30,7 @@ class Main(QWidget):
         """ 附加UI """
         root = QFileInfo(__file__).absolutePath()
         self.setWindowTitle("拼多多爬虫")
-        self.setWindowIcon(QIcon('G:\\job\\python\\Spider_Pdd\\pdd.ico'))
+        self.setWindowIcon(QIcon(r'./pdd.ico'))
         self.resize(964, 635)   # 设置尺寸表
         self.setFixedSize(964, 635)     # 设置固定尺寸
 
