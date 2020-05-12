@@ -3,7 +3,7 @@
 block_cipher = None
 
 
-a = Analysis(['main.py'],
+a = Analysis(['main.py', 'Spider.py', 'Win_ui.py', 'load_excel.py'],
              pathex=['G:\\job\\python\\Spider_Pdd'],
              binaries=[],
              datas=[],
@@ -15,7 +15,6 @@ a = Analysis(['main.py'],
              win_private_assemblies=False,
              cipher=block_cipher,
              noarchive=False)
-a.datas += [('pdd.ico', 'G:\\job\\python\\Spider_Pdd\\pdd.ico', 'DATA')]
 pyz = PYZ(a.pure, a.zipped_data,
              cipher=block_cipher)
 exe = EXE(pyz,
@@ -31,6 +30,4 @@ exe = EXE(pyz,
           upx=True,
           upx_exclude=[],
           runtime_tmpdir=None,
-          console=False,
-          icon='G:\\job\\python\\Spider_Pdd\\pdd.ico'
-          )
+          console=False , icon='pdd.ico')

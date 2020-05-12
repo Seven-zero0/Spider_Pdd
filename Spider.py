@@ -565,9 +565,9 @@ class SpiderPdd(object):
             'cookie': '{}'.format(cookie)
         }
         res = requests.get(url, headers=self.headers, cookies=cookies)
-        time.sleep(3)
+        time.sleep(random.randint(1, 5))
         res = res.content.decode('utf-8')
-        time.sleep(3)
+        time.sleep(random.randint(1, 5))
         print('spider: get_url: 访问成功')
         return res
 
@@ -626,7 +626,7 @@ class SpiderPdd(object):
         try:
             for url in urls:
                 self.num += 1
-                time.sleep(random.randint(0, 1))
+                time.sleep(random.randint(0, 2))
                 urlretrieve(url, path_image + '/{}/'.format(name) + name + '{}.jpg'.format(self.num))
             print('spider: down_image: 移动到文件夹 成功')
             return 1
